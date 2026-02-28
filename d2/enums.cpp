@@ -25,7 +25,7 @@ int main(){
   int choice;
   Character player;
 
-  cout<<"Welcome to my game\n Enter your choice for class \n 1.Swordsman \n 2.Scorcerer \n 3.Demon \n Enter your choice:";
+  cout<<"Welcome to my game\n Enter your choice for class \n 1.Swordsman \n 2.Scorcerer \n 3.Demon \n Enter your choice:"<<endl;
   cin>>choice;
 
   switch(choice){
@@ -35,10 +35,17 @@ int main(){
       player=Scorcererstats;
     case 3:
       player=Demonsstats;
-    default:
-      cout<<"Error!";
   }
+  cout<<"What is your name?"<<endl;
+  cin>>n;
+  
+  player.name=n;
 
-  //cout<<"Your character name is "<<n<<" and stats are:"<<endl;
+  cout<<"Your character name is "<<player.name<<" and class is: "<<player.tp<<endl;
+  cout<<player.name<<" Attack is :"<<player.attack<<endl;
+  cout<<player.name<<" HP is :"<<player.hp<<endl;
+  cout<<player.name<<" Heal is :"<<player.heal<<endl;
+
+  
   return 0;
 }
