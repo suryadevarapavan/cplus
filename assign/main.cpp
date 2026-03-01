@@ -25,7 +25,7 @@ const wepaon h2={POTION,"Draught",15};
 const wepaon h3={POTION,"Brew",5};    
 
 void wpstats(wepaon w){
-  if (w.attack>0){
+  if (w.attack<0){
     cout<<w.name<<" attack is:"<<w.attack<<endl;
   }else{
     cout<<w.name<<" heal is:"<<w.attack<<endl;
@@ -123,27 +123,52 @@ void ds(Info I){
 void Biq(Monster m, Info &I) {
     ds(I);
     enemy_stats(m);
-    cout << "\nBattle: " << I.name << " vs " << m.name << endl;
+    int turns = 0;
 
     while (I.hp > 0 && m.hp > 0) {
-        int pDmg = 0;
-        string wName = I.inventory[0];
-        if (wName == w1.name) pDmg = abs(w1.attack);
-        else if (wName == w2.name) pDmg = abs(w2.attack);
-        else if (wName == w3.name) pDmg = abs(w3.attack);
+        turns++;
+        int choice;
+        cout << "\n--- Turn " << turns << " ---" << endl;
+        cout << "1. Attack" << endl;
+        cout << "2. Heal" << endl;
+        cout << "Choice: ";
+        cin >> choice;
 
-        m.hp -= pDmg;
-        cout << I.name << " deals " << pDmg << " damage." << endl;
+        if (choice == 1) {
+            int pDmg = 0;
+            string wName = I.inventory[0];
+            if (wName == w1.name) pDmg = abs(w1.attack);
+            else if (wName == w2.name) pDmg = abs(w2.attack);
+            else if (wName == w3.name) pDmg = abs(w3.attack);
+
+            m.hp -= pDmg;
+            cout << I.name << " deals " << pDmg << " damage to " << m.name << endl;
+        } 
+        else if (choice == 2) {
+            int pHeal = 0;
+            string hName = I.inventory[1];
+            if (hName == h1.name) pHeal = h1.attack;
+            else if (hName == h2.name) pHeal = h2.attack;
+            else if (hName == h3.name) pHeal = h3.attack;
+
+            I.hp += pHeal;
+            cout << I.name << " uses " << hName << " and heals " << pHeal << " HP" << endl;
+        }
 
         if (m.hp <= 0) break;
 
         I.hp -= m.attack;
-        cout << m.name << " deals " << m.attack << " damage." << endl;
-        cout << "Player HP: " << I.hp << " | Monster HP: " << m.hp << endl;
+        cout << m.name << " deals " << m.attack << " damage" << endl;
+        cout << I.name << " HP: " << I.hp << " | " << m.name << " HP: " << m.hp << endl;
+
+        if (I.hp <= 0) break;
     }
 
-    if (I.hp > 0) cout << "Victory!" << endl;
-    else cout << "Defeat..." << endl;
+    if (I.hp > 0) {
+        cout << "\nVICTORY! Total turns taken: " << turns << endl;
+    } else {
+        cout << "\nDEFEAT... Total turns survived: " << turns << endl;
+    }
 }
 
 int main(){
